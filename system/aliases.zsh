@@ -1,10 +1,25 @@
-# grc overides for ls
-#   Made possible through contributions from generous benefactors like
-#   `brew install coreutils`
-if $(gls &>/dev/null)
-then
-  alias ls="gls -F --color"
-  alias l="gls -lAh --color"
-  alias ll="gls -l --color"
-  alias la='gls -A --color'
-fi
+# +----+
+# | ls |
+# +----+
+
+alias ls='ls --color=auto'
+alias lsl='ls -l'
+alias ll='ls -lahF'
+alias lls='ls -lahFtr'
+alias la='ls -A'
+alias l='ls -CF'
+
+# +------+
+# | grep |
+# +------+
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+#----------------#
+# Custom Aliases #
+#----------------#
+alias aws='aws-mfa && aws'
+alias weather="boringweather --office=LOT -x=73 -y=76"
+alias unix-now='date "+%s"'

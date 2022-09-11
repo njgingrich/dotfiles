@@ -1,0 +1,78 @@
+#--------------#
+# PATH Exports #
+#--------------#
+
+export DOTFILES="$HOME/.dotfiles"
+
+# Add dir colors
+test -r "~/.config/.dir_colors" && eval $(dircolors ~/.config/.dir_colors)
+
+# Deno
+export PATH="$HOME/.deno/bin:$PATH"
+
+# Python
+export PATH="/Users/nathan/.pyenv/shims:${PATH}"
+eval "$(pyenv init -)"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
+#---------------------------#
+# Config/Completion Loading #
+#---------------------------#
+# all of our zsh files
+typeset -U config_files
+config_files=($DOTFILES/**/*.zsh)
+
+# load everything but the path and completion files
+for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
+do
+  echo "Sourcing file:\t[$file]"
+  source $file
+done
+
+# load every completion after autocomplete loads
+for file in ${(M)config_files:#*/completion.zsh}
+do
+  echo "Sourcing file:\t[$file]"
+  source $file
+done
+
+unset config_files
+
+#-------------#
+# ZSH Options #
+#-------------#
+ZSH_DISABLE_COMPFIX=true
+# Do not write a duplicate event to the history file.
+setopt inc_append_history
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
+
+# Up-arrow command completion
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+
+#--------------------#
+# Load Other Configs #
+#--------------------#
+source ~/.sproutrc
+
+# Starship prompt
+eval "$(starship init zsh)"

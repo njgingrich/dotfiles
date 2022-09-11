@@ -4,6 +4,7 @@
 
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
+CONFIG_ROOT="$HOME/.config"
 
 set -e
 
@@ -137,8 +138,24 @@ install_dotfiles () {
   done
 }
 
+install_conflinks () {
+  info 'installing conflinks'
+
+  mkdir -p "$CONFIG_ROOT"
+
+  local overwrite_all=false backup_all=false skip_all=false
+
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.conflink' -not -path '*.git*')
+  do
+    dir=$(echo $(dirname "${src%.*}") | sed -e "s|$DOTFILES_ROOT|$CONFIG_ROOT|g")
+    dst="$dir/.$(basename "${src%.*}")"
+    link_file "$src" "$dst"
+  done
+}
+
 setup_gitconfig
 install_dotfiles
+install_conflinks
 
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]
