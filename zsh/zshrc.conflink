@@ -35,14 +35,12 @@ config_files=($DOTFILES/**/*.zsh)
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
-  echo "Sourcing file:\t[$file]"
   source $file
 done
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
 do
-  echo "Sourcing file:\t[$file]"
   source $file
 done
 
