@@ -12,7 +12,10 @@ export PATH="$HOME/.deno/bin:$PATH"
 
 # Python
 export PATH="/Users/nathan/.pyenv/shims:${PATH}"
-eval "$(pyenv init -)"
+if test -f '$(pyenv -v)'
+then
+  eval "$(pyenv init -)"
+fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"

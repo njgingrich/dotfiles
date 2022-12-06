@@ -28,8 +28,7 @@ font:
   bold_italic:
     family: Hasklug Nerd Font Mono
     style: Bold Italic
-  size: 14.0
-  use_thin_strokes: true
+  size: 11.0
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
 
@@ -59,7 +58,7 @@ colors:
       foreground: "0x1b1e28"
       background: "0xadd7ff"
 
-    bar:
+    footer_bar:
       foreground: "0x1b1e28"
       background: "0xadd7ff"
 
