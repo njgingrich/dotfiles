@@ -16,6 +16,13 @@ function git_current_branch() {
   fi
   echo ${ref#refs/heads/}
 }
+git-log-size() {
+  git rev-list HEAD -- "$1" | while read cid; do
+    git cat-file blob "$cid:$1" | wc -l | tr -d '\n'
+    echo -n $'\t'
+    git log -1 "--pretty=%ci%x09%h%x09%s" $cid
+  done | column -t -s$','
+}
 
 alias ga='git add'
 alias gac='git add -A && git commit -m'
@@ -23,13 +30,14 @@ alias gb='git branch '
 alias gblame='git blame'
 alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'"                                                             # git log for each branches
 alias gc='git commit'
-alias gclean="git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d" # Delete local branch merged with master
+alias gclean="git branch --merged | grep  -v -E '\\*\\|main\\|dev' | xargs -n 1 git branch -d" # Delete local branch merged with master
 alias gcm='git commit -m '
 alias gco='git checkout '
 # Remove `+` and `-` from start of diff lines; just rely upon color.
 alias gd='git diff --color | sed "s/^\([^-+ ]*\)[-+ ]/\\1/" | less -r'
 # alias gd='git diff'
 alias gl='git log --pretty=oneline'
+alias gls='git-log-size '
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glol='git log --graph --abbrev-commit --oneline --decorate'
 alias gp='git push'
