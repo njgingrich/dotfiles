@@ -20,6 +20,6 @@ alias egrep='egrep --color=auto'
 #----------------#
 # Custom Aliases #
 #----------------#
-alias aws='aws-mfa && aws'
+#alias aws='aws-mfa && aws'
 alias weather="boringweather --office=LOT -x=73 -y=76"
 alias unix-now='date "+%s"'

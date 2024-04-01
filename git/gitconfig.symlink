@@ -32,10 +32,22 @@
         #
         # Setting to git 2.0 default to suppress warning message
         default = simple
-        autoSetupRemote = true
+	autoSetupRemote = true
 [credential]
 	helper = osxkeychain
 [diff "spaceman-diff"]
         command = /opt/homebrew/bin/spaceman-diff
 [init]
         defaultBranch = main
+[pull]
+	rebase = true
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+[diff]
+	algorithm = histogram
+[branch]
+	sort = -committerdate
+[merge]
+	conflictstyle = zdiff3

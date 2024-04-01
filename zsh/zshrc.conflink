@@ -1,7 +1,6 @@
 #--------------#
 # PATH Exports #
 #--------------#
-
 export DOTFILES="$HOME/.dotfiles"
 
 # Add dir colors
@@ -11,11 +10,9 @@ test -r "~/.config/.dir_colors" && eval $(dircolors ~/.config/.dir_colors)
 export PATH="$HOME/.deno/bin:$PATH"
 
 # Python
-export PATH="/Users/nathan/.pyenv/shims:${PATH}"
-if test -f '$(pyenv -v)'
-then
-  eval "$(pyenv init -)"
-fi
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
